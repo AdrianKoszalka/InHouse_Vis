@@ -129,8 +129,8 @@ dmypy.json
 .pyre/
 
 # Photoshop files:
-.psd
+*.psd
 
 # Images:
-.png 
-.jpeg
+*.png 
+*.jpeg
