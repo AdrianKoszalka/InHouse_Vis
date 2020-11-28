@@ -12,21 +12,26 @@ class MainWindow(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # self.font = ('Lato', '20', 'bold')
+
         self.attributes('-fullscreen', True)
-        self.configure(bg = '#f9fafd')
+        self.configure(bg = '#dbdcdd')
         self.update()
 
+        self.grid_propagate(0)
         self.rowconfigure(0, weight = 1)
-        self.columnconfigure((0,1,2), weight = 1)
+        self.columnconfigure(0, minsize = 340)
+        self.columnconfigure(1, weight = 1)
+        self.columnconfigure(2, minsize = 190)
 
         left_section = LeftSection(self)
-        left_section.grid(row = 0, column = 0, sticky = 'NESW')
+        left_section.grid_propagate(0)
 
         main_section = MainSection(self)
-        main_section.grid(row = 0, column = 1, sticky = 'NESW')
+        main_section.grid_propagate(0)
 
         right_section = RightSection(self)
-        right_section.grid(row = 0, column = 2, sticky = 'NESW')
+        right_section.grid_propagate(0)
 
 app = MainWindow()
 app.mainloop()
