@@ -1,37 +1,30 @@
-import tkinter as tk
-from tkinter import ttk
-
 from windows import set_dpi_awareness
 from layout.left_section import LeftSection
 from layout.main_section import MainSection
 from layout.right_section import RightSection
+from layout.main_window import MainWindow
+from objects.objects import objects
 
-set_dpi_awareness()
 
-class MainWindow(tk.Tk):
+class Application():
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        
+        self.choosed_area = objects[0]
+        
+        set_dpi_awareness()
 
-        # self.font = ('Lato', '20', 'bold')
+        main_window = MainWindow()
 
-        self.attributes('-fullscreen', True)
-        self.configure(bg = '#dbdcdd')
-        self.update()
-
-        self.grid_propagate(0)
-        self.rowconfigure(0, weight = 1)
-        self.columnconfigure(0, minsize = 340)
-        self.columnconfigure(1, weight = 1)
-        self.columnconfigure(2, minsize = 190)
-
-        left_section = LeftSection(self)
+        left_section = LeftSection(main_window)
         left_section.grid_propagate(0)
 
-        main_section = MainSection(self)
+        main_section = MainSection(main_window)
+        main_section.display_area_name(self.choosed_area.name)
         main_section.grid_propagate(0)
 
-        right_section = RightSection(self)
+        right_section = RightSection(main_window)
         right_section.grid_propagate(0)
 
-app = MainWindow()
-app.mainloop()
+        main_window.mainloop()
+
+app = Application()

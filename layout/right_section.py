@@ -22,3 +22,6 @@ class RightSection(ttk.Frame):
         image = Image.open('layout/images/index_bar_bg.png')
         self.pic = ImageTk.PhotoImage(image)
         self.canvas.create_image(0, 0, image = self.pic, anchor='nw')
+
+    def create_load_index(self):
+        pass

@@ -26,7 +26,6 @@ class MainSection(ttk.Frame):
         self.data_tima_canvas = tk.Canvas(self.data_time_bar, bd=0, highlightthickness=0, bg = '#dbdcdd')
         self.data_tima_canvas.grid(row = 0, column = 0, sticky = 'NESW')
 
-        self.display_area_name()
         self.load_date_and_time()
 
         self.area_layout = tk.Frame(self)
@@ -47,7 +46,7 @@ class MainSection(ttk.Frame):
         self.pic = ImageTk.PhotoImage(image)
         self.layout_canvas.create_image(0, 0, image = self.pic, anchor='nw')
 
-    def display_area_name(self, area_name = "Area_name"):
+    def display_area_name(self, area_name):
         self.data_tima_canvas.create_text(15,45 , text = area_name, font = ('Lato', '18', 'normal'), fill = '#313a46', anchor = 'nw')
 
     def load_date_and_time(self):
