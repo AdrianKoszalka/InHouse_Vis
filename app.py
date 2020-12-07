@@ -13,18 +13,23 @@ class Application():
         
         set_dpi_awareness()
 
-        main_window = MainWindow()
+        self.main_window = MainWindow()
 
-        left_section = LeftSection(main_window)
+        left_section = LeftSection(self.main_window)
         left_section.grid_propagate(0)
 
-        main_section = MainSection(main_window)
+        main_section = MainSection(self.main_window)
         main_section.display_area_name(self.choosed_area.name)
         main_section.grid_propagate(0)
 
-        right_section = RightSection(main_window)
+        right_section = RightSection(self.main_window)
         right_section.grid_propagate(0)
+        right_section.button_canvas.tag_bind(right_section.button, "<Button-1>", self.quit_program)
 
-        main_window.mainloop()
+        self.main_window.mainloop()
+
+    def quit_program(self, *args):
+        self.main_window.destroy()
 
 app = Application()
+

@@ -14,3 +14,6 @@ class MainWindow(tk.Tk):
         self.columnconfigure(0, minsize = 340)
         self.columnconfigure(1, weight = 1)
         self.columnconfigure(2, minsize = 190)
+
+    def quit_program(self):
+        self.destroy()

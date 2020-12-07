@@ -16,12 +16,28 @@ class RightSection(ttk.Frame):
         self.canvas = tk.Canvas(self, bd=0, highlightthickness=0, bg = '#dbdcdd')
         self.canvas.grid(sticky='NESW')
 
+        self.canvas.rowconfigure(0, weight = 1)
+        self.canvas.columnconfigure(0, weight = 1)
+
         self.insert_bg()
+        self.create_quit_button()
 
     def insert_bg(self):
         image = Image.open('layout/images/index_bar_bg.png')
         self.pic = ImageTk.PhotoImage(image)
         self.canvas.create_image(0, 0, image = self.pic, anchor='nw')
 
+    def create_quit_button(self):
+        self.button_canvas = tk.Canvas(self.canvas, height = 40, width = 130, bd=0, highlightthickness=0, bg = '#313a46', cursor = "hand2")
+        self.button_canvas.grid(sticky = "S", pady = (0, 10))
+
+        self.quit_button_pic = Image.open('layout/images/quit_button.png')
+        self.button_pic = ImageTk.PhotoImage(self.quit_button_pic)
+
+        self.button = self.button_canvas.create_image(0, 0,  image = self.button_pic, anchor = "nw")
+
     def create_load_index(self):
+        pass
+
+    def program_quit(self):
         pass
