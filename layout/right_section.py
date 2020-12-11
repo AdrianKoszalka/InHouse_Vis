@@ -36,8 +36,25 @@ class RightSection(ttk.Frame):
 
         self.button = self.button_canvas.create_image(0, 0,  image = self.button_pic, anchor = "nw")
 
-    def create_load_index(self):
-        pass
+    def create_indexes(self, workers, workers_in, workers_p, workstation, workstation_used, workstation_p):
+        self.canvas.create_text(10, 10, text = "Area Load", font = ('Lato', '15', 'normal'), fill = "#6a829a", anchor = 'nw')
+        
+        self.canvas.create_text(10, 50, text = "WORKERS:", font = ('Lato', '8', 'normal'), fill = "#6a829a", anchor = 'nw')
+        self.canvas.create_text(
+            10, 65, 
+            text = "{}/{} ({}%)".format(workers_in, workers, workers_p), 
+            font = ('Lato', '15', 'normal'), 
+            fill = "white", 
+            anchor = 'nw')
+
+        self.canvas.create_text(10, 100, text = "USED WORKSTATION:", font = ('Lato', '8', 'normal'), fill = "#6a829a", anchor = 'nw')
+        self.canvas.create_text(
+            10, 115, 
+            text = "{}/{} ({}%)".format(workstation_used, workstation, workstation_p), 
+            font = ('Lato', '15', 'normal'), 
+            fill = "white", 
+            anchor = 'nw')
+
 
     def program_quit(self):
         pass
