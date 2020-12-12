@@ -1,4 +1,3 @@
-import tkinter as tk
 import datetime
 
 from windows import set_dpi_awareness
@@ -12,15 +11,20 @@ from sql_conector import SQLConnector
 
 class Application():
     def __init__(self, *args, **kwargs):
-        
+        set_dpi_awareness()
         self.choosed_area = objects[0]
         
         self.current_date = datetime.datetime.now()
-
-        print(self.current_date)
-        set_dpi_awareness()
+        self.current_time = datetime.time(6,53,00) ##Do usunięcia
 
         self.main_window = MainWindow()
+
+        connector = SQLConnector()
+        connector.import_workers()
+        connector.import_log_records(self)
+        connector.workers_in_or_out()
+        connector.area_in_or_out()
+        connector.calculate_capacity(self.choosed_area)
 
         left_section = LeftSection(self.main_window)
         left_section.grid_propagate(0)
@@ -35,18 +39,13 @@ class Application():
         right_section.grid_propagate(0)
         right_section.button_canvas.tag_bind(right_section.button, "<Button-1>", self.quit_program)
         right_section.create_indexes(
-            self.choosed_area.workers_quantity,
-            self.choosed_area.workers_in_quantity,
-            self.choosed_area.workers_in_percent,
-            self.choosed_area.workstation_quantity,
-            self.choosed_area.workstation_used_quantity,
-            self.choosed_area.workstation_used_percent)
-
-        connector = SQLConnector()
-        connector.import_workers()
-        connector.import_log_records(self)
+            connector.workers_quantity,
+            connector.workers_in_quantity,
+            connector.workers_in_percent,
+            connector.work_station_quantity,
+            connector.work_station_in_quantity,
+            connector.work_station_in_percent)
         
-
         self.main_window.mainloop()
 
     def quit_program(self, *args):
