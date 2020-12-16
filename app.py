@@ -14,7 +14,8 @@ class Application():
         set_dpi_awareness()
         self.choosed_area = objects[0]
         
-        self.current_date = datetime.datetime.now()
+        # self.current_date = datetime.datetime.now() 
+        self.current_date = datetime.date(2020,12,12) ##Do usunięcia
         self.current_time = datetime.time(6,53,00) ##Do usunięcia
 
         self.main_window = MainWindow()
@@ -27,6 +28,7 @@ class Application():
         connector.calculate_capacity(self.choosed_area)
 
         left_section = LeftSection(self.main_window)
+        left_section.create_workers_list(connector)
         left_section.grid_propagate(0)
 
         main_section = MainSection(self.main_window)

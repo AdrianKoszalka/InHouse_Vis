@@ -27,8 +27,6 @@ class SQLConnector():
         except:
             self.connection_status = 0 
 
-        print(self.connection_status)
-
     def import_workers(self):
 
         self.my_cursor.execute("SELECT worker_id, name, sec_name, work_station FROM workers_list;")
@@ -37,8 +35,6 @@ class SQLConnector():
         self.workers_df = pd.DataFrame(self.result, columns=["workers_id", "name", "sec_name", "work_station"])
         self.workers_df.set_index("workers_id", inplace=True)
 
-        print(self.workers_df)
-
     def import_log_records(self, parent):
         ## Dodać opcję która zaciąga aktualny czas! 
         self.my_cursor.execute("SELECT * FROM card_records WHERE date = '{}' and hour < '{}';".format(str(parent.current_date.strftime('%Y-%m-%d')), str(parent.current_time)))
@@ -46,8 +42,6 @@ class SQLConnector():
 
         self.cards_records = pd.DataFrame(self.result_2, columns=["record", "in_out", "date", "hour", "worker_id"])
         self.cards_records.set_index("record")
-
-        print(self.cards_records)
 
     def workers_in_or_out(self):
 
@@ -75,21 +69,16 @@ class SQLConnector():
             if out_rec not in self.workers_in:
                 self.workers_out.append(out_rec)
 
-        print(self.workers_in)
-
     def area_in_or_out(self):
         self.area_in = []
 
         for ids in self.workers_in:
             self.area_in.append(self.workers_df.loc[ids, 'work_station'])
-        
-        print(self.area_in)
     
     def calculate_capacity(self, parent):
 
         self.workers_quantity = len(self.workers_all)
         self.workers_in_quantity = len(self.workers_in)
-        print(self.workers_in_quantity)
 
         self.workers_in_percent = int((round((self.workers_in_quantity/self.workers_quantity), 2))*100)
 
