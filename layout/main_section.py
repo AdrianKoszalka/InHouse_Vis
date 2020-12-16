@@ -76,3 +76,51 @@ class MainSection(ttk.Frame):
         self.load_time()
 
         self.data_tima_canvas.after(1000, self.update_time)
+
+    # def insert_image(self):
+
+    #     image = Image.open("Layouts/Layout2.jpg")
+    #     image_width = image.size[0]
+    #     image_height = image.size[1]
+
+    #     if image_width > self.frame_width or image_height > self.frame_height:
+    #         ratio_w = image_width/self.frame_width
+    #         ratio_h = image_height/self.frame_height
+                
+    #         if ratio_w > ratio_h:
+    #             image = image.resize((int((image_width/ratio_w)-50), int((image_height/ratio_w)-50)), Image.ANTIALIAS)
+    #             self.pic = ImageTk.PhotoImage(image)
+    #             self.canvas.create_image((self.half_frame_width, self.half_frame_height), image=self.pic)
+    #         else:
+    #             image = image.resize((int((image_width/ratio_h)-50), int((image_height/ratio_h)-50)), Image.ANTIALIAS)
+    #             self.pic = ImageTk.PhotoImage(image)
+    #             self.canvas.create_image((self.half_frame_width, self.half_frame_height), image=self.pic)
+
+    # def load_dots(self, sthelse):
+        
+    #     image_2 = Image.open("images/red_dot.png")
+    #     self.pik_2 = ImageTk.PhotoImage(image_2)
+
+    #     image_3 = Image.open("images/green_dot.png")
+    #     self.pik_3 = ImageTk.PhotoImage(image_3)
+
+    #     self.area_in = []
+
+    #     for ids in connect.workers_in:
+    #         self.area_in.append(connect.workers_df.loc[ids, 'work_station'])
+            
+    #     for area_names in self.location_dic.keys():
+    #         if area_names in self.area_in:
+    #             for positions in self.location_dic[area_names]:
+
+    #                 dot_x = positions[0]
+    #                 dot_y = positions[1]
+
+    #                 self.canvas.create_image((dot_x, dot_y), image=self.pik_3)
+    #         else:
+    #             for positions in self.location_dic[area_names]:
+
+    #                 dot_x = positions[0]
+    #                 dot_y = positions[1]
+
+    #                 self.canvas.create_image((dot_x, dot_y), image=self.pik_2)
