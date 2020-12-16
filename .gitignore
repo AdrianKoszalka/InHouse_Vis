@@ -131,6 +131,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# AutoCAD files:
+*.dwg
+
 # Photoshop files:
 *.psd
 
