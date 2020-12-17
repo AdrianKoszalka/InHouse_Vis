@@ -120,31 +120,29 @@ class MainSection(ttk.Frame):
                 for img in pic:
                     self.layout_canvas.create_image((self.half_frame_width, self.half_frame_height), image=img)
 
-    def load_dots(self, sthelse):
+    def load_dots(self, workstation_dict, sql_data):
         
-        image_2 = Image.open("images/red_dot.png")
+        image_2 = Image.open("layout/images/red_dot.png")
         self.pik_2 = ImageTk.PhotoImage(image_2)
 
-        image_3 = Image.open("images/green_dot.png")
+        image_3 = Image.open("layout/images/green_dot.png")
         self.pik_3 = ImageTk.PhotoImage(image_3)
 
-        self.area_in = []
-
-        for ids in connect.workers_in:
-            self.area_in.append(connect.workers_df.loc[ids, 'work_station'])
+        # for ids in sql_data.workers_in:
+        #     self.area_in.append(connect.workers_df.loc[ids, 'work_station'])
             
-        for area_names in self.location_dic.keys():
-            if area_names in self.area_in:
-                for positions in self.location_dic[area_names]:
+        for area_names in workstation_dict.keys():
+            if area_names in sql_data.area_in:
+                for positions in workstation_dict[area_names]:
 
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.canvas.create_image((dot_x, dot_y), image=self.pik_3)
+                    self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_3)
             else:
-                for positions in self.location_dic[area_names]:
+                for positions in workstation_dict[area_names]:
 
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.canvas.create_image((dot_x, dot_y), image=self.pik_2)
+                    self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_2)
