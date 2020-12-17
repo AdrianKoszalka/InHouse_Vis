@@ -7,7 +7,7 @@ class MainWindow(tk.Tk):
 
         self.attributes('-fullscreen', True)
         self.configure(bg = '#dbdcdd')
-        self.update()
+        self.update_idletasks()
 
         self.grid_propagate(0)
         self.rowconfigure(0, weight = 1)

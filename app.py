@@ -35,6 +35,8 @@ class Application():
         main_section.display_area_name(self.choosed_area.name)
         main_section.load_date_and_time_icon()
         main_section.load_date(self.current_date)
+        main_section.insert_image(self.choosed_area.layout_path)
+        main_section.load_dots()
         main_section.grid_propagate(0)
 
         right_section = RightSection(self.main_window)
