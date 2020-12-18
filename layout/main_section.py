@@ -128,8 +128,7 @@ class MainSection(ttk.Frame):
         image_3 = Image.open("layout/images/green_dot.png")
         self.pik_3 = ImageTk.PhotoImage(image_3)
 
-        # for ids in sql_data.workers_in:
-        #     self.area_in.append(connect.workers_df.loc[ids, 'work_station'])
+        self.dots_tags = [] 
             
         for area_names in workstation_dict.keys():
             if area_names in sql_data.area_in:
@@ -138,11 +137,35 @@ class MainSection(ttk.Frame):
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_3)
+                    self.green_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_3, tag = "{}_dot".format(area_names))
+                    self.dots_tags.append("{}_dot".format(area_names))
             else:
                 for positions in workstation_dict[area_names]:
 
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_2)
+                    self.red_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_2, tag = "{}_dot".format(area_names))
+                    self.dots_tags.append("{}_dot".format(area_names))
+
+
+    def display_workstation_info(self):
+        
+        for dots in self.dots_tags:
+            self.layout_canvas.tag_bind(dots, '<Enter>', lambda event, dot = dots: self.display(event, dot))
+
+    def display(self, event, dot):
+        
+        print(dot)
+
+    def create_dots_position_dic(self, workstation_dict):
+        
+        self.dots_position = {}
+
+        for areas in workstation_dict.keys():
+            for position in workstation_dict[areas]:
+
+                self.dots_position[areas] = [position[0] - 10, position[0] + 10, position[1] - 10, position[1] + 10]
+
+        print(self.dots_position)
+
