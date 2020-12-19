@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import datetime
 import time
+import pandas as pd
 
 class MainSection(ttk.Frame):
     def __init__(self, *args, **kwargs):
@@ -42,8 +43,6 @@ class MainSection(ttk.Frame):
 
         self.layout_canvas.columnconfigure(0, weight = 1)
         self.layout_canvas.rowconfigure(0, weight = 1)
-
-        # self.insert_layout_bg()
 
     def insert_layout_bg(self):
         bg_image = Image.open('layout/images/area_layout_bg.png')
@@ -137,35 +136,58 @@ class MainSection(ttk.Frame):
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.green_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_3, tag = "{}_dot".format(area_names))
-                    self.dots_tags.append("{}_dot".format(area_names))
+                    self.green_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_3, tag = "{}".format(area_names))
+                    self.dots_tags.append("{}".format(area_names))
             else:
                 for positions in workstation_dict[area_names]:
 
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.red_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_2, tag = "{}_dot".format(area_names))
-                    self.dots_tags.append("{}_dot".format(area_names))
+                    self.red_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_2, tag = "{}".format(area_names))
+                    self.dots_tags.append("{}".format(area_names))
 
 
-    def display_workstation_info(self):
+    def mouse_enter_dots(self, workstation_dict, sql_data):
         
         for dots in self.dots_tags:
-            self.layout_canvas.tag_bind(dots, '<Enter>', lambda event, dot = dots: self.display(event, dot))
+            self.layout_canvas.tag_bind(dots, '<Enter>', lambda event, dot = dots, workstation_dict = workstation_dict, sql_data=sql_data: self.display_workstation_info(event, dot, workstation_dict, sql_data))
+            self.layout_canvas.tag_bind(dots, '<Leave>', lambda event: self.clear_layout_area(event))
 
-    def display(self, event, dot):
+    def display_workstation_info(self, event, dot, workstation_dict, sql_data):
         
-        print(dot)
+        dots_position = workstation_dict[dot]
 
-    def create_dots_position_dic(self, workstation_dict):
+        workers_name = sql_data.workers_df[sql_data.workers_df['work_station'] == dot]['name'].values
+        workers_second_name = sql_data.workers_df[sql_data.workers_df['work_station'] == dot]['sec_name'].values
+
+        self.layout_canvas.config(cursor = "hand2")
         
-        self.dots_position = {}
+        try:
+            worker_full_name = str(workers_name[0] + " " + workers_second_name[0])
+        except:
+            worker_full_name = None
 
-        for areas in workstation_dict.keys():
-            for position in workstation_dict[areas]:
+        try:
+            workers_id = sql_data.workers_df[sql_data.workers_df['work_station'] == dot].index.values
+        except:
+            workers_id = None
 
-                self.dots_position[areas] = [position[0] - 10, position[0] + 10, position[1] - 10, position[1] + 10]
+        workstation_label_bg = Image.open('layout/images/workstation_label.png')
+        self.pic_6 = ImageTk.PhotoImage(workstation_label_bg)
 
-        print(self.dots_position)
+        self.layout_canvas.create_image(dots_position[0][0] - 60, dots_position[0][1] - 60, image = self.pic_6, anchor = 'nw', tag = "w_label_bg")
+        self.layout_canvas.create_text(dots_position[0][0] - 55, dots_position[0][1] - 55, text = dot, anchor = 'nw', font = ('Lato', '7', 'bold'), fill = "#313a46", tag = "w_workstation_name")
 
+        try:
+            if workers_id[0] in sql_data.workers_in:
+                self.layout_canvas.create_text(dots_position[0][0] - 55, dots_position[0][1] - 42, text = worker_full_name, anchor = 'nw', font = ('Lato', '9', 'bold'), fill = "#67cd35", tag = "w_worker_name")
+            else:
+                self.layout_canvas.create_text(dots_position[0][0] - 55, dots_position[0][1] - 42, text = worker_full_name, anchor = 'nw', font = ('Lato', '9', 'bold'), fill = "#cd3535", tag = "w_worker_name")
+        except:
+            self.layout_canvas.create_text(dots_position[0][0] - 55, dots_position[0][1] - 42, text = "Empty Workstation", anchor = 'nw', font = ('Lato', '9', 'bold'), fill = "#313a46", tag = "w_worker_name")
+
+    def clear_layout_area(self, event):
+
+        self.layout_canvas.delete("w_label_bg", "w_workstation_name", "w_worker_name")
+        self.layout_canvas.config(cursor = "arrow")

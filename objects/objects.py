@@ -27,7 +27,7 @@ carpetry_shop = Area_model(
         "Table_10":[(742,540)],
         "Table_11":[(874,540)],
         "Table_12":[(1006,540)]},
-    layout_path = "layout/images/Layout3.jpg"
+    layout_path = "layout/images/Layout4.jpg"
     )
     
 

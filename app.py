@@ -16,7 +16,7 @@ class Application():
         
         # self.current_date = datetime.datetime.now() 
         self.current_date = datetime.date(2020,12,12) ##Do usunięcia
-        self.current_time = datetime.time(6,53,00) ##Do usunięcia
+        self.current_time = datetime.time(6,55,00) ##Do usunięcia
 
         self.main_window = MainWindow()
 
@@ -37,8 +37,7 @@ class Application():
         main_section.load_date(self.current_date)
         main_section.insert_image(self.choosed_area.layout_path)
         main_section.load_dots(self.choosed_area.workstations, connector)
-        # main_section.create_dots_position_dic(self.choosed_area.workstations)
-        main_section.display_workstation_info()
+        main_section.mouse_enter_dots(self.choosed_area.workstations, connector)
         main_section.grid_propagate(0)
 
         right_section = RightSection(self.main_window)
@@ -52,22 +51,9 @@ class Application():
             connector.work_station_in_quantity,
             connector.work_station_in_percent)
         
-        self.mouse_position_refresher()
-        
         self.main_window.mainloop()
 
     def quit_program(self, *args):
         self.main_window.destroy()
 
-    def workstation_info_display(self):
-
-        self.mouse_position = self.main_window.winfo_pointerxy()
-
-    def mouse_position_refresher(self):
-
-        self.workstation_info_display()
-
-        self.main_window.after(500, self.mouse_position_refresher)
-
 app = Application()
-
