@@ -25,11 +25,8 @@ class MainSection(ttk.Frame):
         self.data_time_bar.rowconfigure(0, weight = 1)
         self.data_time_bar.columnconfigure(0, weight = 1)
 
-        self.data_tima_canvas = tk.Canvas(self.data_time_bar, bd=0, highlightthickness=0, bg = '#dbdcdd')
-        self.data_tima_canvas.grid(row = 0, column = 0, sticky = 'NESW')
-
-        self.load_time()
-        self.data_tima_canvas.after(1000, self.update_time)
+        self.data_time_canvas = tk.Canvas(self.data_time_bar, bd=0, highlightthickness=0, bg = '#dbdcdd')
+        self.data_time_canvas.grid(row = 0, column = 0, sticky = 'NESW')
 
         self.area_layout = tk.Frame(self)
         self.area_layout.grid(row = 1, column = 0, sticky = 'NESW')
@@ -47,37 +44,37 @@ class MainSection(ttk.Frame):
     def insert_layout_bg(self):
         bg_image = Image.open('layout/images/area_layout_bg.png')
 
-        self.pic = ImageTk.PhotoImage(bg_image)
-        bg_image = self.layout_canvas.create_image(0, 0, image = self.pic, anchor='nw')
+        self.background_image = ImageTk.PhotoImage(bg_image)
+        bg_image = self.layout_canvas.create_image(0, 0, image = self.background_image, anchor='nw')
 
     def display_area_name(self, area_name):
-        self.data_tima_canvas.create_text(15,45 , text = area_name, font = ('Lato', '18', 'normal'), fill = '#313a46', anchor = 'nw')
+        self.data_time_canvas.create_text(15,45 , text = area_name, font = ('Lato', '18', 'normal'), fill = '#313a46', anchor = 'nw')
 
     def load_date_and_time_icon(self):
 
         calendar_image = Image.open('layout/images/calendar.png')
         self.calendar_pic = ImageTk.PhotoImage(calendar_image)
-        self.data_tima_canvas.create_image(1060, 45, image=self.calendar_pic, anchor='nw')
+        self.data_time_canvas.create_image(1060, 45, image=self.calendar_pic, anchor='nw')
 
         clock_image = Image.open('layout/images/clock.png')
         self.clock_pic = ImageTk.PhotoImage(clock_image)
-        self.data_tima_canvas.create_image(1240,47, image=self.clock_pic, anchor='nw')
+        self.data_time_canvas.create_image(1240,47, image=self.clock_pic, anchor='nw')
 
     def load_date(self, date_):
 
-        self.data_tima_canvas.create_text(1100, 49 , text = date_.strftime("%d/%m/%Y"), font = ('Lato', '15', 'normal'), fill = '#939393', anchor = 'nw')
+        self.data_time_canvas.create_text(1100, 49 , text = date_.strftime("%d/%m/%Y"), font = ('Lato', '15', 'normal'), fill = '#939393', anchor = 'nw')
 
     def load_time(self):
-        current_time = time.strftime("%H:%M:%S")
+        self.current_time = time.strftime('%H:%M:%S')
 
-        self.dis_time = self.data_tima_canvas.create_text(1280,49 , text = current_time, font = ('Lato', '15', 'normal'), fill = '#939393', anchor = 'nw')
+        self.dis_time = self.data_time_canvas.create_text(1280,49 , text = self.current_time, font = ('Lato', '15', 'normal'), fill = '#939393', anchor = 'nw')
 
     def update_time(self):
-        self.data_tima_canvas.delete(self.dis_time)
+        self.data_time_canvas.delete(self.dis_time)
         
         self.load_time()
 
-        self.data_tima_canvas.after(1000, self.update_time)
+        self.data_time_canvas.after(1000, self.update_time)
 
     def insert_image(self, path):
 
@@ -98,23 +95,23 @@ class MainSection(ttk.Frame):
                 
             if ratio_w > ratio_h:
                 image = image.resize((int((image_width/ratio_w)-50), int((image_height/ratio_w)-50)), Image.ANTIALIAS)
-                self.pic = ImageTk.PhotoImage(image)
+                self.area_layout_image = ImageTk.PhotoImage(image)
                 
                 bg_image = Image.open('layout/images/area_layout_bg.png')
-                self.pic_2 = ImageTk.PhotoImage(bg_image)
+                self.background_image = ImageTk.PhotoImage(bg_image)
                 
-                pic = [self.pic_2, self.pic]
+                pic = [self.background_image, self.area_layout_image]
 
                 for img in pic:
                     self.layout_canvas.create_image((self.half_frame_width, self.half_frame_height), image=img)
             else:
                 image = image.resize((int((image_width/ratio_h)-50), int((image_height/ratio_h)-50)), Image.ANTIALIAS)
-                self.pic = ImageTk.PhotoImage(image)
+                self.area_layout_image = ImageTk.PhotoImage(image)
                 
                 bg_image = Image.open('layout/images/area_layout_bg.png')
-                self.pic_2 = ImageTk.PhotoImage(bg_image)
+                self.background_image = ImageTk.PhotoImage(bg_image)
                 
-                pic = [self.pic_2, self.pic]
+                pic = [self.background_image, self.area_layout_image]
 
                 for img in pic:
                     self.layout_canvas.create_image((self.half_frame_width, self.half_frame_height), image=img)
@@ -122,10 +119,10 @@ class MainSection(ttk.Frame):
     def load_dots(self, workstation_dict, sql_data):
         
         image_2 = Image.open("layout/images/red_dot.png")
-        self.pik_2 = ImageTk.PhotoImage(image_2)
+        self.red_dot_image = ImageTk.PhotoImage(image_2)
 
         image_3 = Image.open("layout/images/green_dot.png")
-        self.pik_3 = ImageTk.PhotoImage(image_3)
+        self.green_dot_image = ImageTk.PhotoImage(image_3)
 
         self.dots_tags = [] 
             
@@ -136,7 +133,7 @@ class MainSection(ttk.Frame):
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.green_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_3, tag = "{}".format(area_names))
+                    green_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.green_dot_image, tag = "{}".format(area_names))
                     self.dots_tags.append("{}".format(area_names))
             else:
                 for positions in workstation_dict[area_names]:
@@ -144,7 +141,7 @@ class MainSection(ttk.Frame):
                     dot_x = positions[0]
                     dot_y = positions[1]
 
-                    self.red_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.pik_2, tag = "{}".format(area_names))
+                    red_point = self.layout_canvas.create_image((dot_x, dot_y), image=self.red_dot_image, tag = "{}".format(area_names))
                     self.dots_tags.append("{}".format(area_names))
 
 
@@ -174,9 +171,9 @@ class MainSection(ttk.Frame):
             workers_id = None
 
         workstation_label_bg = Image.open('layout/images/workstation_label.png')
-        self.pic_6 = ImageTk.PhotoImage(workstation_label_bg)
+        self.workstation_label = ImageTk.PhotoImage(workstation_label_bg)
 
-        self.layout_canvas.create_image(dots_position[0][0] - 60, dots_position[0][1] - 60, image = self.pic_6, anchor = 'nw', tag = "w_label_bg")
+        self.layout_canvas.create_image(dots_position[0][0] - 60, dots_position[0][1] - 60, image = self.workstation_label, anchor = 'nw', tag = "w_label_bg")
         self.layout_canvas.create_text(dots_position[0][0] - 55, dots_position[0][1] - 55, text = dot, anchor = 'nw', font = ('Lato', '7', 'bold'), fill = "#313a46", tag = "w_workstation_name")
 
         try:

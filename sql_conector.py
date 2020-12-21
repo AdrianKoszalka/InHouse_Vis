@@ -30,17 +30,17 @@ class SQLConnector():
     def import_workers(self):
 
         self.my_cursor.execute("SELECT worker_id, name, sec_name, work_station FROM workers_list;")
-        self.result = self.my_cursor.fetchall()
+        self.workers_result = self.my_cursor.fetchall()
 
-        self.workers_df = pd.DataFrame(self.result, columns=["workers_id", "name", "sec_name", "work_station"])
+        self.workers_df = pd.DataFrame(self.workers_result, columns=["workers_id", "name", "sec_name", "work_station"])
         self.workers_df.set_index("workers_id", inplace=True)
 
-    def import_log_records(self, parent):
-        ## Dodać opcję która zaciąga aktualny czas! 
-        self.my_cursor.execute("SELECT * FROM card_records WHERE date = '{}' and hour < '{}';".format(str(parent.current_date.strftime('%Y-%m-%d')), str(parent.current_time)))
-        self.result_2 = self.my_cursor.fetchall()
+    def import_log_records(self, parent, time):
+        
+        self.my_cursor.execute("SELECT * FROM card_records WHERE date = '{}' and hour < '{}';".format(str(parent.current_date_and_time.strftime('%Y-%m-%d')), str(time)))
+        self.records_result = self.my_cursor.fetchall()
 
-        self.cards_records = pd.DataFrame(self.result_2, columns=["record", "in_out", "date", "hour", "worker_id"])
+        self.cards_records = pd.DataFrame(self.records_result, columns=["record", "in_out", "date", "hour", "worker_id"])
         self.cards_records.set_index("record")
 
     def workers_in_or_out(self):
