@@ -6,7 +6,9 @@ import time
 import pandas as pd
 
 class MainSection(ttk.Frame):
+    
     def __init__(self, *args, **kwargs):
+        
         super().__init__( *args, **kwargs)
 
         self.grid(row = 0, column = 1, sticky = 'NESW')
@@ -42,13 +44,20 @@ class MainSection(ttk.Frame):
         self.layout_canvas.rowconfigure(0, weight = 1)
 
     def insert_layout_bg(self):
+        
         bg_image = Image.open('layout/images/area_layout_bg.png')
 
         self.background_image = ImageTk.PhotoImage(bg_image)
         bg_image = self.layout_canvas.create_image(0, 0, image = self.background_image, anchor='nw')
 
     def display_area_name(self, area_name):
-        self.data_time_canvas.create_text(15,45 , text = area_name, font = ('Lato', '18', 'normal'), fill = '#313a46', anchor = 'nw')
+        
+        self.data_time_canvas.create_text(
+            15,45, 
+            text = area_name,
+            font = ('Lato', '18', 'normal'), 
+            fill = '#313a46', 
+            anchor = 'nw')
 
     def load_date_and_time_icon(self):
 
@@ -62,12 +71,22 @@ class MainSection(ttk.Frame):
 
     def load_date(self, date_):
 
-        self.data_time_canvas.create_text(1100, 49 , text = date_.strftime("%d/%m/%Y"), font = ('Lato', '15', 'normal'), fill = '#939393', anchor = 'nw')
+        self.data_time_canvas.create_text(
+            1100, 49,
+            text = date_.strftime("%d/%m/%Y"), 
+            font = ('Lato', '15', 'normal'), 
+            fill = '#939393', 
+            anchor = 'nw')
 
     def load_time(self):
         self.current_time = time.strftime('%H:%M:%S')
 
-        self.dis_time = self.data_time_canvas.create_text(1280,49 , text = self.current_time, font = ('Lato', '15', 'normal'), fill = '#939393', anchor = 'nw')
+        self.dis_time = self.data_time_canvas.create_text(
+            1280,49, 
+            text = self.current_time, 
+            font = ('Lato', '15', 'normal'), 
+            fill = '#939393', 
+            anchor = 'nw')
 
     def update_time(self):
         self.data_time_canvas.delete(self.dis_time)

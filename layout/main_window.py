@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 class MainWindow(tk.Tk):
+    
     def __init__(self, *args, **kwargs):
+        
         super().__init__(*args, **kwargs)
 
         self.attributes('-fullscreen', True)
@@ -16,4 +18,5 @@ class MainWindow(tk.Tk):
         self.columnconfigure(2, minsize = 190)
 
     def quit_program(self):
+        
         self.destroy()

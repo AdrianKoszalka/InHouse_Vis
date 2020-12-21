@@ -5,7 +5,9 @@ import pandas as pd
 from sql_login import Login
 
 class SQLConnector():
+    
     def __init__(self, *args, **kwargs):
+        
         sql_login = Login()
         
         self.hostname = sql_login.hostname
@@ -70,6 +72,7 @@ class SQLConnector():
                 self.workers_out.append(out_rec)
 
     def area_in_or_out(self):
+        
         self.area_in = []
 
         for ids in self.workers_in:

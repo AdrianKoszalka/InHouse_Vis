@@ -3,7 +3,9 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 
 class RightSection(ttk.Frame):
+    
     def __init__(self, *args, **kwargs):
+        
         super().__init__( *args, **kwargs)
 
         self.update()
@@ -23,11 +25,14 @@ class RightSection(ttk.Frame):
         self.create_quit_button()
 
     def insert_bg(self):
+        
         right_section_bg = Image.open('layout/images/index_bar_bg.png')
+        
         self.background_image = ImageTk.PhotoImage(right_section_bg)
         self.load_index_canvas.create_image(0, 0, image = self.background_image, anchor='nw')
 
     def create_quit_button(self): 
+        
         self.button_canvas = tk.Canvas(self.load_index_canvas, height = 40, width = 130, bd=0, highlightthickness=0, bg = '#313a46', cursor = "hand2")
         self.button_canvas.grid(sticky = "S", pady = (0, 10))
 
@@ -38,10 +43,29 @@ class RightSection(ttk.Frame):
 
     def crate_title_textes(self):
 
-        self.load_index_canvas.create_text(10, 10, text = "Area Load", font = ('Lato', '15', 'normal'), fill = "#6a829a", anchor = 'nw', tag = "title text")
-        self.load_index_canvas.create_text(10, 50, text = "WORKERS:", font = ('Lato', '8', 'normal'), fill = "#6a829a", anchor = 'nw', tag = "workers_text")
-        self.load_index_canvas.create_text(10, 100, text = "USED WORKSTATION:", font = ('Lato', '8', 'normal'), fill = "#6a829a", anchor = 'nw', tag = "workstation_text")
+        self.load_index_canvas.create_text(
+            10, 10, 
+            text = "Area Load", 
+            font = ('Lato', '15', 'normal'), 
+            fill = "#6a829a", 
+            anchor = 'nw', 
+            tag = "title text")
 
+        self.load_index_canvas.create_text(
+            10, 50, 
+            text = "WORKERS:", 
+            font = ('Lato', '8', 'normal'), 
+            fill = "#6a829a", 
+            anchor = 'nw', 
+            tag = "workers_text")
+
+        self.load_index_canvas.create_text(
+            10, 100, 
+            text = "USED WORKSTATION:", 
+            font = ('Lato', '8', 'normal'), 
+            fill = "#6a829a", 
+            anchor = 'nw', 
+            tag = "workstation_text")
 
     def create_indexes(self, workers, workers_in, workers_p, workstation, workstation_used, workstation_p):
 

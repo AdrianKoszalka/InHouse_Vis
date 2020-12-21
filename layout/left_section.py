@@ -3,7 +3,9 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 
 class LeftSection(ttk.Frame):
+    
     def __init__(self, *args, **kwargs):
+        
         super().__init__( *args, **kwargs)
         
         self.update()
@@ -19,11 +21,13 @@ class LeftSection(ttk.Frame):
         self.insert_bg()
 
     def insert_bg(self):
+        
         image = Image.open('layout/images/workers_list_bg.png')
+        
         self.pic = ImageTk.PhotoImage(image)
         self.workers_list_canvas.create_image(0, 0, image = self.pic, anchor='nw')
 
-    def create_workers_list(self, connect): 
+    def create_workers_list(self, connect):
         
         full_name_in = []
         full_name_out = []
@@ -44,9 +48,8 @@ class LeftSection(ttk.Frame):
             font = ('Lato', '12', 'normal'), 
             fill = "#6a829a", 
             anchor = 'nw',
-            tag = 'workers_in_text'
-        )
-
+            tag = 'workers_in_text')
+        
         self.y_position = 120
 
         for names in sorted_full_name_in:
@@ -56,8 +59,7 @@ class LeftSection(ttk.Frame):
                 font = ('Lato', '10', 'normal'),
                 fill = "#9fcabe",
                 anchor = 'nw',
-                tag = 'names_in_list'
-            )
+                tag = 'names_in_list')
             self.y_position += 20
 
         self.y_position += 10
@@ -67,8 +69,7 @@ class LeftSection(ttk.Frame):
             font = ('Lato', '12', 'normal'), 
             fill = "#6a829a", 
             anchor = 'nw',
-            tag = 'workers_out_text'
-        )
+            tag = 'workers_out_text')
         self.y_position += 25
 
         for names in sorted_full_name_out:
@@ -78,8 +79,7 @@ class LeftSection(ttk.Frame):
                 font = ('Lato', '10', 'normal'),
                 fill = "#cb9aa4",
                 anchor = 'nw',
-                tag = 'names_out_list'
-            )
+                tag = 'names_out_list')
             self.y_position += 20
 
         self.tags_to_refresh = ['workers_in_text', 'names_in_list', 'workers_out_text', 'names_out_list']
