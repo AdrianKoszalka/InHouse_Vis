@@ -62,7 +62,3 @@ class RightSection(ttk.Frame):
             fill = "white", 
             anchor = 'nw',
             tag = "workstation_index")
-
-
-    def program_quit(self):
-        pass
